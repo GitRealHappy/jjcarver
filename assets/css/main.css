@@ -171,7 +171,7 @@ a {
 
 .testimonials__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
   margin-top: 2rem;
   align-items: stretch;
@@ -183,15 +183,15 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem;
-  min-height: 260px;
+  padding: 2rem;
+  min-height: 380px;
 }
 
 .testimonial img {
   width: auto;
   height: auto;
   max-width: 100%;
-  max-height: 320px;
+  max-height: 480px;
   object-fit: contain;
 }
 
