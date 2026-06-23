@@ -171,21 +171,28 @@ a {
 
 .testimonials__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1.5rem;
   margin-top: 2rem;
+  align-items: stretch;
 }
 
 .testimonial {
   background: var(--color-bg-alt);
   border: 1px solid var(--color-border);
-  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  min-height: 260px;
 }
 
 .testimonial img {
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 320px;
+  object-fit: contain;
 }
 
 /* COMING SOON */
