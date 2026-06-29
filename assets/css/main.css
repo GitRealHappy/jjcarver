@@ -102,7 +102,7 @@ a {
 .hero__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(13, 12, 10, 0.55) 0%, rgba(13, 12, 10, 0.75) 60%, rgba(13, 12, 10, 0.95) 100%);
+  background: linear-gradient(180deg, rgba(13, 12, 10, 0.35) 0%, rgba(13, 12, 10, 0.55) 60%, rgba(13, 12, 10, 0.80) 100%);
 }
 
 .hero__content {
@@ -371,7 +371,7 @@ blockquote {
   .hero__overlay {
     bottom: auto;
     height: 75vw;
-    background: linear-gradient(180deg, rgba(13, 12, 10, 0.25) 0%, rgba(13, 12, 10, 0.45) 60%, rgba(13, 12, 10, 0.65) 100%);
+    background: linear-gradient(180deg, rgba(13, 12, 10, 0.10) 0%, rgba(13, 12, 10, 0.30) 60%, rgba(13, 12, 10, 0.50) 100%);
   }
 
   .hero__content {
