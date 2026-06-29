@@ -371,6 +371,7 @@ blockquote {
   .hero__overlay {
     bottom: auto;
     height: 75vw;
+    background: linear-gradient(180deg, rgba(13, 12, 10, 0.25) 0%, rgba(13, 12, 10, 0.45) 60%, rgba(13, 12, 10, 0.65) 100%);
   }
 
   .hero__content {
