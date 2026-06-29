@@ -111,6 +111,7 @@ a {
   max-width: 760px;
   padding: 0 1.5rem;
   text-align: center;
+  transform: translateY(150px);
 }
 
 .hero__title {
@@ -353,6 +354,32 @@ blockquote {
 /* RESPONSIVE */
 
 @media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: auto;
+  }
+
+  .hero__bg {
+    position: relative;
+    height: 75vw;
+    width: 100%;
+    flex-shrink: 0;
+  }
+
+  .hero__overlay {
+    bottom: auto;
+    height: 75vw;
+  }
+
+  .hero__content {
+    transform: none;
+    margin-top: -3rem;
+    max-width: 100%;
+    padding: 0 1.5rem 2.5rem;
+  }
+
   .bio {
     grid-template-columns: 1fr;
   }
