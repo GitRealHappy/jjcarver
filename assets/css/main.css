@@ -11,6 +11,7 @@
 
   --max-width: 1080px;
   --space-section: 7rem;
+  --banner-height: 3rem;
 }
 
 * {
@@ -30,6 +31,11 @@ body {
   font-weight: 400;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  padding-top: var(--banner-height);
+}
+
+body.modal-open {
+  overflow: hidden;
 }
 
 img {
@@ -66,11 +72,121 @@ a {
 
 .site-header {
   position: absolute;
-  top: 0;
+  top: var(--banner-height);
   left: 0;
   right: 0;
   z-index: 10;
   padding: 2rem clamp(1.5rem, 5vw, 4rem);
+}
+
+/* PROMO BANNER */
+
+.promo-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  height: var(--banner-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border: none;
+  background: var(--color-accent);
+  color: var(--color-bg);
+  font-family: var(--font-body);
+  font-size: clamp(0.68rem, 1.6vw, 0.8rem);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.promo-banner:hover {
+  background: #dcb35c;
+}
+
+/* WAITLIST MODAL */
+
+.waitlist-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.waitlist-modal[hidden] {
+  display: none;
+}
+
+.waitlist-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(13, 12, 10, 0.75);
+}
+
+.waitlist-modal__panel {
+  position: relative;
+  z-index: 1;
+  max-width: 440px;
+  width: 100%;
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  padding: 2.5rem;
+  text-align: center;
+}
+
+.waitlist-modal__panel h3 {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3vw, 1.75rem);
+  margin-bottom: 1rem;
+}
+
+.waitlist-modal__panel p {
+  color: var(--color-text-dim);
+  margin-bottom: 1.5rem;
+}
+
+.waitlist-modal__close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  color: var(--color-text-dim);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.waitlist-modal__close:hover {
+  color: var(--color-text);
+}
+
+.waitlist-modal__cta {
+  display: inline-block;
+  padding: 0.85rem 2rem;
+  border: 1px solid var(--color-accent);
+  color: var(--color-accent);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+
+.waitlist-modal__cta:hover {
+  background: var(--color-accent);
+  color: var(--color-bg);
 }
 
 .wordmark {

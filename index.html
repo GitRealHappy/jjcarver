@@ -14,6 +14,10 @@
 </head>
 <body>
 
+  <button type="button" class="promo-banner" id="waitlist-banner">
+    Join the wait list for my next in-person event
+  </button>
+
   <header class="site-header">
     <a href="#" class="wordmark">JJC</a>
   </header>
@@ -174,6 +178,21 @@
 
   </main>
 
+  <div class="waitlist-modal" id="waitlist-modal" hidden>
+    <div class="waitlist-modal__backdrop" data-close-modal></div>
+    <div class="waitlist-modal__panel" role="dialog" aria-modal="true" aria-labelledby="waitlist-modal-title">
+      <button type="button" class="waitlist-modal__close" data-close-modal aria-label="Close">&times;</button>
+      <p class="eyebrow">Coming in 2027</p>
+      <h3 id="waitlist-modal-title">The Next In-Person Event</h3>
+      <p>
+        I'm planning my next in-person gathering for 2027. Location and dates aren't
+        announced yet, but space will be limited. Get on the list and you'll be the
+        first to know when tickets, dates, and location go live.
+      </p>
+      <a class="waitlist-modal__cta" href="https://tickets.thelivinginternet.com/events/thelivinginternetalliance/2274135" target="_blank" rel="noopener">Get on the List</a>
+    </div>
+  </div>
+
   <footer class="site-footer">
     <p>&copy; 2026 Jesse James Carver. All rights reserved.</p>
     <div class="site-footer__links">
@@ -183,6 +202,32 @@
   </footer>
 
   <script>if(!window.circleFormsScriptLoaded){window.circleFormsScriptLoaded=true;const script=document.createElement('script');script.src='https://living-internet-alliance.circle.so/external/form-embeds.js';script.defer=true;document.head.appendChild(script)}</script>
+
+  <script>
+    (function () {
+      const banner = document.getElementById('waitlist-banner');
+      const modal = document.getElementById('waitlist-modal');
+      if (!banner || !modal) return;
+
+      function openModal() {
+        modal.hidden = false;
+        document.body.classList.add('modal-open');
+      }
+
+      function closeModal() {
+        modal.hidden = true;
+        document.body.classList.remove('modal-open');
+      }
+
+      banner.addEventListener('click', openModal);
+      modal.querySelectorAll('[data-close-modal]').forEach(function (el) {
+        el.addEventListener('click', closeModal);
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && !modal.hidden) closeModal();
+      });
+    })();
+  </script>
 
 </body>
 </html>
