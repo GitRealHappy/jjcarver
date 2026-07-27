@@ -47,9 +47,9 @@ body {
 }
 
 .isi-hero__subtitle {
-  color: var(--color-text-dim);
+  color: var(--color-text-mid);
   max-width: 620px;
-  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  font-size: clamp(1.15rem, 1.6vw, 1.35rem);
   margin: 0 auto 1.75rem;
 }
 
