@@ -2,6 +2,7 @@
   --color-bg: #0d0c0a;
   --color-bg-alt: #151310;
   --color-text: #ece7df;
+  --color-text-mid: #cbc3b9;
   --color-text-dim: #a8a098;
   --color-accent: #c9a24b;
   --color-border: #2a2722;
@@ -200,10 +201,11 @@ a {
 
 .hero {
   position: relative;
-  min-height: 100vh;
+  min-height: calc(100vh - var(--banner-height));
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 3rem 0;
   overflow: hidden;
 }
 
@@ -218,27 +220,84 @@ a {
 .hero__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(13, 12, 10, 0.35) 0%, rgba(13, 12, 10, 0.55) 60%, rgba(13, 12, 10, 0.80) 100%);
+  background:
+    radial-gradient(ellipse 78% 52% at 50% 74%, rgba(13, 12, 10, 0.72) 0%, rgba(13, 12, 10, 0.30) 62%, rgba(13, 12, 10, 0) 100%),
+    linear-gradient(180deg, rgba(13, 12, 10, 0.35) 0%, rgba(13, 12, 10, 0.55) 60%, rgba(13, 12, 10, 0.80) 100%);
 }
+
+/* Attention rings: concentric hairlines radiating from the room, drifting at
+   different rates on scroll. The page's thesis — where attention lives, and
+   how it moves — rendered rather than described. */
+
+.hero__rings {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  transform: translateY(-6vh);
+}
+
+.hero__rings svg {
+  flex-shrink: 0;
+  width: min(148vmax, 1700px);
+  height: min(148vmax, 1700px);
+  overflow: visible;
+}
+
+.hero__ring {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  will-change: transform;
+}
+
+.hero__ring:nth-child(1) { opacity: 0.28; }
+.hero__ring:nth-child(2) { opacity: 0.23; }
+.hero__ring:nth-child(3) { opacity: 0.19; }
+.hero__ring:nth-child(4) { opacity: 0.15; }
+.hero__ring:nth-child(5) { opacity: 0.12; }
+.hero__ring:nth-child(6) { opacity: 0.10; }
 
 .hero__content {
   position: relative;
   z-index: 1;
-  max-width: 760px;
+  max-width: 1100px;
   padding: 0 1.5rem;
   text-align: center;
-  transform: translateY(150px);
+  transform: translateY(min(8vh, 110px));
 }
 
 .hero__title {
-  font-size: clamp(2.75rem, 7vw, 5.5rem);
-  margin-bottom: 1.5rem;
+  font-size: clamp(2.75rem, 9vw, 8rem);
+  line-height: 0.9;
+  letter-spacing: -0.025em;
+  margin-bottom: 1.75rem;
+}
+
+.hero__title-line {
+  display: block;
+}
+
+.hero__title-line--light {
+  font-size: 0.9em;
+  font-weight: 400;
+  font-variation-settings: 'opsz' 144, 'wght' 400;
+}
+
+.hero__title-line--heavy {
+  font-size: 1.08em;
+  font-weight: 600;
+  font-variation-settings: 'opsz' 144, 'wght' 600;
+  letter-spacing: -0.035em;
 }
 
 .hero__subtitle {
-  font-size: clamp(1rem, 1.3vw, 1.2rem);
-  color: var(--color-text-dim);
-  max-width: 560px;
+  font-size: clamp(1.05rem, 1.35vw, 1.25rem);
+  color: var(--color-text-mid);
+  max-width: 580px;
   margin: 0 auto;
 }
 
@@ -363,12 +422,50 @@ a {
 }
 
 .sales__hook {
-  font-size: clamp(1.8rem, 4vw, 2.6rem);
-  margin-bottom: 1.5rem;
+  font-size: clamp(2.2rem, 5vw, 3.75rem);
+  line-height: 1.03;
+  letter-spacing: -0.02em;
+  font-variation-settings: 'opsz' 144, 'wght' 500;
+  text-wrap: balance;
+  margin-bottom: 1.75rem;
+}
+
+/* The load-bearing sentences. Brightness carries the emphasis, so the rest of
+   the copy can stay at reading tone instead of everything shouting at once. */
+
+.sales__key {
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.sales em {
+  color: var(--color-text);
 }
 
 .sales__section {
   margin-bottom: 3rem;
+}
+
+/* A single arc from the hero motif, passing behind the magician's-thread
+   section. Clipped by the section box so only part of the circle shows. */
+
+.sales__method {
+  position: relative;
+  overflow: hidden;
+}
+
+.sales__method::before {
+  content: '';
+  position: absolute;
+  top: -720px;
+  left: 50%;
+  width: 900px;
+  height: 900px;
+  margin-left: -450px;
+  border: 1px solid rgba(201, 162, 75, 0.20);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
 }
 
 .sales__method .phase {
@@ -464,6 +561,18 @@ blockquote {
   color: var(--color-accent);
 }
 
+/* MOTION */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .hero__ring {
+    will-change: auto;
+  }
+}
+
 /* RESPONSIVE */
 
 @media (max-width: 768px) {
@@ -472,6 +581,20 @@ blockquote {
     justify-content: flex-start;
     align-items: center;
     min-height: auto;
+    padding: 0;
+  }
+
+  .hero__rings {
+    transform: none;
+  }
+
+  .hero__rings svg {
+    width: min(125vmax, 900px);
+    height: min(125vmax, 900px);
+  }
+
+  .sales__method::before {
+    display: none;
   }
 
   .hero__bg {
