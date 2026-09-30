@@ -7,7 +7,7 @@
   --color-accent: #c9a24b;
   --color-border: #2a2722;
 
-  --font-display: 'Fraunces', 'Georgia', serif;
+  --font-display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
   --font-body: 'Inter', -apple-system, system-ui, sans-serif;
 
   --max-width: 1080px;
@@ -47,8 +47,9 @@ img {
 
 h1, h2 {
   font-family: var(--font-display);
-  font-weight: 500;
-  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
   color: var(--color-text);
 }
 
@@ -147,6 +148,7 @@ a {
 
 .waitlist-modal__panel h3 {
   font-family: var(--font-display);
+  font-weight: 800;
   font-size: clamp(1.4rem, 3vw, 1.75rem);
   margin-bottom: 1rem;
 }
@@ -284,15 +286,13 @@ a {
 
 .hero__title-line--light {
   font-size: 0.9em;
-  font-weight: 400;
-  font-variation-settings: 'opsz' 144, 'wght' 400;
+  font-weight: 500;
 }
 
 .hero__title-line--heavy {
   font-size: 1.08em;
-  font-weight: 600;
-  font-variation-settings: 'opsz' 144, 'wght' 600;
-  letter-spacing: -0.035em;
+  font-weight: 900;
+  letter-spacing: -0.03em;
 }
 
 .hero__subtitle {
@@ -319,6 +319,28 @@ a {
 .hero__btn:hover {
   background: var(--color-accent);
   color: var(--color-bg);
+}
+
+.hero__actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+
+.hero__actions .hero__btn {
+  margin-top: 0;
+}
+
+.hero__btn--solid {
+  background: var(--color-accent);
+  color: var(--color-bg);
+}
+
+.hero__btn--solid:hover {
+  background: transparent;
+  color: var(--color-accent);
 }
 
 /* BIO / STORY */
@@ -404,7 +426,7 @@ a {
 
 .sales h3 {
   font-family: var(--font-display);
-  font-weight: 500;
+  font-weight: 800;
   font-size: clamp(1.4rem, 2.2vw, 1.8rem);
   color: var(--color-text);
   margin-bottom: 1rem;
@@ -426,7 +448,6 @@ a {
   font-size: clamp(2.2rem, 5vw, 3.75rem);
   line-height: 1.03;
   letter-spacing: -0.02em;
-  font-variation-settings: 'opsz' 144, 'wght' 500;
   text-wrap: balance;
   margin-bottom: 1.75rem;
 }
@@ -531,6 +552,72 @@ blockquote {
 .sales__form {
   margin-top: 2rem;
   text-align: left;
+}
+
+/* BOOKING */
+
+.booking {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: var(--space-section) 1.5rem;
+  border-top: 1px solid var(--color-border);
+  text-align: center;
+  scroll-margin-top: var(--banner-height);
+}
+
+.booking h2 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  margin-bottom: 1.25rem;
+}
+
+.booking p {
+  color: var(--color-text-mid);
+  margin-bottom: 1.25rem;
+}
+
+.booking .booking__lead {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--color-text);
+}
+
+.booking .booking__details {
+  margin: 2rem 0;
+  color: var(--color-accent);
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* TAGLINE */
+
+.tagline {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem;
+  text-align: center;
+}
+
+.tagline p {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  color: var(--color-text-mid);
+}
+
+.tagline strong {
+  display: block;
+  margin-top: 0.75rem;
+  color: var(--color-accent);
+  font-weight: 800;
+}
+
+.booking .calendly-inline-widget {
+  border: 1px solid var(--color-border);
 }
 
 /* FOOTER */
