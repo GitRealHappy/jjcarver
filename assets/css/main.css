@@ -375,7 +375,7 @@ a {
 }
 
 .poster--photo::before {
-  background: var(--poster-img) center / cover no-repeat;
+  background: var(--poster-img) var(--poster-pos, center) / cover no-repeat;
   transition: transform 0.6s;
 }
 
