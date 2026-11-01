@@ -12,7 +12,6 @@
 
   --max-width: 1080px;
   --space-section: 7rem;
-  --banner-height: 3rem;
 }
 
 * {
@@ -33,11 +32,6 @@ body {
   font-size: 1.0625rem;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  padding-top: var(--banner-height);
-}
-
-body.modal-open {
-  overflow: hidden;
 }
 
 img {
@@ -67,130 +61,15 @@ a {
   margin-bottom: 1rem;
 }
 
-.eyebrow--center {
-  text-align: center;
-}
-
 /* HEADER */
 
 .site-header {
   position: absolute;
-  top: var(--banner-height);
+  top: 0;
   left: 0;
   right: 0;
   z-index: 10;
   padding: 2rem clamp(1.5rem, 5vw, 4rem);
-}
-
-/* PROMO BANNER */
-
-.promo-banner {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 20;
-  height: var(--banner-height);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  border: none;
-  background: var(--color-accent);
-  color: var(--color-bg);
-  font-family: var(--font-body);
-  font-size: clamp(0.68rem, 1.6vw, 0.8rem);
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  text-align: center;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.promo-banner:hover {
-  background: #dcb35c;
-}
-
-/* WAITLIST MODAL */
-
-.waitlist-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-}
-
-.waitlist-modal[hidden] {
-  display: none;
-}
-
-.waitlist-modal__backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(13, 12, 10, 0.75);
-}
-
-.waitlist-modal__panel {
-  position: relative;
-  z-index: 1;
-  max-width: 440px;
-  width: 100%;
-  background: var(--color-bg-alt);
-  border: 1px solid var(--color-border);
-  padding: 2.5rem;
-  text-align: center;
-}
-
-.waitlist-modal__panel h3 {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: clamp(1.4rem, 3vw, 1.75rem);
-  margin-bottom: 1rem;
-}
-
-.waitlist-modal__panel p {
-  color: var(--color-text-dim);
-  margin-bottom: 1.5rem;
-}
-
-.waitlist-modal__close {
-  position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  background: none;
-  border: none;
-  color: var(--color-text-dim);
-  font-size: 1.5rem;
-  line-height: 1;
-  cursor: pointer;
-  padding: 0.5rem;
-}
-
-.waitlist-modal__close:hover {
-  color: var(--color-text);
-}
-
-.waitlist-modal__cta {
-  display: inline-block;
-  padding: 0.85rem 2rem;
-  border: 1px solid var(--color-accent);
-  color: var(--color-accent);
-  font-family: var(--font-body);
-  font-size: 0.85rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  text-decoration: none;
-  transition: background 0.2s, color 0.2s;
-}
-
-.waitlist-modal__cta:hover {
-  background: var(--color-accent);
-  color: var(--color-bg);
 }
 
 .wordmark {
@@ -204,7 +83,7 @@ a {
 
 .hero {
   position: relative;
-  min-height: calc(100vh - var(--banner-height));
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -229,8 +108,8 @@ a {
 }
 
 /* Attention rings: concentric hairlines radiating from the room, drifting at
-   different rates on scroll. The page's thesis — where attention lives, and
-   how it moves — rendered rather than described. */
+   different rates on scroll. The page's thesis, where attention lives and
+   how it moves, rendered rather than described. */
 
 .hero__rings {
   position: absolute;
@@ -295,16 +174,37 @@ a {
   letter-spacing: -0.03em;
 }
 
-.hero__subtitle {
-  font-size: clamp(1.05rem, 1.35vw, 1.25rem);
+.hero__chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  list-style: none;
+  gap: 0.35rem 0;
+}
+
+.hero__chips li {
+  font-size: clamp(0.72rem, 1.3vw, 0.88rem);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
   color: var(--color-text-mid);
-  max-width: 580px;
-  margin: 0 auto;
+}
+
+.hero__chips li + li::before {
+  content: '\00b7';
+  margin: 0 0.9rem;
+  color: var(--color-accent);
+}
+
+.hero__actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2.5rem;
 }
 
 .hero__btn {
   display: inline-block;
-  margin-top: 2.5rem;
   padding: 0.85rem 2rem;
   border: 1px solid var(--color-accent);
   color: var(--color-accent);
@@ -321,18 +221,6 @@ a {
   color: var(--color-bg);
 }
 
-.hero__actions {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-top: 2.5rem;
-}
-
-.hero__actions .hero__btn {
-  margin-top: 0;
-}
-
 .hero__btn--solid {
   background: var(--color-accent);
   color: var(--color-bg);
@@ -343,7 +231,7 @@ a {
   color: var(--color-accent);
 }
 
-/* BIO / STORY */
+/* BIO */
 
 .bio {
   max-width: var(--max-width);
@@ -373,256 +261,187 @@ a {
   margin-bottom: 1.2rem;
 }
 
-.bio__note {
-  color: var(--color-accent);
-  font-style: italic;
+.bio__content p:last-child {
+  margin-bottom: 0;
 }
 
-/* TESTIMONIALS */
+/* OFFERS */
 
-.testimonials {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: var(--space-section) 1.5rem;
+.offers {
+  padding: var(--space-section) 0 calc(var(--space-section) - 2rem);
   border-top: 1px solid var(--color-border);
+  scroll-margin-top: 1rem;
 }
 
-.testimonials__grid {
+.offers__head {
+  max-width: var(--max-width);
+  margin: 0 auto 3rem;
+  padding: 0 1.5rem;
+}
+
+.offers__head h2 {
+  font-size: clamp(2rem, 3.4vw, 3rem);
+}
+
+/* CONVEYOR: assets/js/conveyor.js clones the cards to fill the width and sets
+   --shift and --dur so the loop is seamless at any viewport size. */
+
+.conveyor {
+  position: relative;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+}
+
+.conveyor__track {
   display: flex;
-  gap: 1rem;
-  margin-top: 1.25rem;
+  gap: 1.25rem;
+  width: max-content;
+  padding: 0.75rem 0;
+  animation: conveyor var(--dur, 80s) linear infinite;
+  will-change: transform;
 }
 
-.testimonials__col {
-  flex: 1;
+.conveyor:hover .conveyor__track,
+.conveyor:focus-within .conveyor__track {
+  animation-play-state: paused;
+}
+
+@keyframes conveyor {
+  to {
+    transform: translateX(calc(var(--shift, 0px) * -1));
+  }
+}
+
+/* POSTER CARDS */
+
+.poster {
+  position: relative;
+  flex: 0 0 auto;
+  width: 290px;
+  height: 400px;
+  padding: 1.6rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-}
-
-.testimonial {
+  justify-content: space-between;
   overflow: hidden;
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
 }
 
-.testimonial img {
-  width: 100%;
-  height: auto;
+.poster:hover,
+.poster:focus-visible {
+  border-color: var(--color-accent);
+  transform: translateY(-6px);
+  box-shadow:
+    0 0 0 1px rgba(201, 162, 75, 0.25),
+    0 18px 50px rgba(201, 162, 75, 0.14);
+  outline: none;
+}
+
+.poster__rings {
+  position: absolute;
+  inset: -20% -20% auto -20%;
+  width: 140%;
+  pointer-events: none;
+}
+
+.poster__rings circle {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.30;
+  transition: opacity 0.25s;
+}
+
+.poster__rings circle:nth-child(2) { opacity: 0.22; }
+.poster__rings circle:nth-child(3) { opacity: 0.15; }
+.poster__rings circle:nth-child(4) { opacity: 0.10; }
+
+.poster:hover .poster__rings circle {
+  opacity: 0.45;
+}
+
+/* Photo variant: the image fills the card, with a scrim so the type stays legible. */
+
+.poster--photo::before,
+.poster--photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.poster--photo::before {
+  background: var(--poster-img) center / cover no-repeat;
+  transition: transform 0.6s;
+}
+
+.poster--photo::after {
+  background:
+    linear-gradient(180deg, rgba(13, 12, 10, 0.55) 0%, rgba(13, 12, 10, 0.10) 30%, rgba(13, 12, 10, 0.55) 62%, rgba(13, 12, 10, 0.94) 100%);
+}
+
+.poster--photo:hover::before {
+  transform: scale(1.05);
+}
+
+.poster--photo .poster__blurb {
+  color: var(--color-text-mid);
+}
+
+.poster__kind {
+  position: relative;
+  z-index: 1;
+  font-size: 0.74rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.poster__body {
+  position: relative;
+  z-index: 1;
+}
+
+.poster__title,
+.poster__blurb {
   display: block;
 }
 
-/* SALES */
-
-.sales {
-  max-width: 680px;
-  margin: 0 auto;
-  padding: var(--space-section) 1.5rem;
-  border-top: 1px solid var(--color-border);
-}
-
-.sales p {
-  color: var(--color-text-dim);
-  margin-bottom: 1.2rem;
-}
-
-.sales h3 {
+.poster__title {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+  font-size: 1.7rem;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
   color: var(--color-text);
-  margin-bottom: 1rem;
-}
-
-.sales h4 {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: 1.1rem;
-  color: var(--color-accent);
   margin-bottom: 0.75rem;
 }
 
-.sales__lead {
-  margin-bottom: 3rem;
-}
-
-.sales__hook {
-  font-size: clamp(2.2rem, 5vw, 3.75rem);
-  line-height: 1.03;
-  letter-spacing: -0.02em;
-  text-wrap: balance;
-  margin-bottom: 1.75rem;
-}
-
-/* The load-bearing sentences. Brightness carries the emphasis, so the rest of
-   the copy can stay at reading tone instead of everything shouting at once. */
-
-.sales__key {
-  color: var(--color-text);
-  font-weight: 500;
-}
-
-.sales em {
-  color: var(--color-text);
-}
-
-.sales__section {
-  margin-bottom: 3rem;
-}
-
-/* A single arc from the hero motif, passing behind the magician's-thread
-   section. Clipped by the section box so only part of the circle shows. */
-
-.sales__method {
-  position: relative;
-  overflow: hidden;
-}
-
-.sales__method::before {
-  content: '';
-  position: absolute;
-  top: -720px;
-  left: 50%;
-  width: 900px;
-  height: 900px;
-  margin-left: -450px;
-  border: 1px solid rgba(201, 162, 75, 0.20);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: -1;
-}
-
-.sales__method .phase {
-  margin-top: 2rem;
-  padding-left: 1.25rem;
-  border-left: 1px solid var(--color-border);
-}
-
-.sales__attribution {
+.poster__blurb {
+  font-size: 0.93rem;
+  line-height: 1.5;
   color: var(--color-text-dim);
-  font-size: 0.85rem;
-  font-style: italic;
-}
-
-blockquote {
-  font-family: var(--font-display);
-  font-size: 1.2rem;
-  color: var(--color-text);
-  margin: 1rem 0 0.5rem;
-  padding-left: 1rem;
-  border-left: 2px solid var(--color-accent);
-}
-
-.sales__highlight {
-  background: var(--color-bg-alt);
-  border: 1px solid var(--color-border);
-  padding: 2rem;
-  margin-bottom: 2rem;
-}
-
-.sales__price {
-  font-family: var(--font-display);
-  font-size: 2.2rem;
-  color: var(--color-accent);
-  margin-bottom: 0.5rem;
-}
-
-.sales__fit {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  margin-bottom: 3rem;
-}
-
-.sales__faq dt {
-  font-family: var(--font-display);
-  font-style: italic;
-  color: var(--color-text);
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.sales__faq dd {
-  color: var(--color-text-dim);
-}
-
-.sales__cta {
-  text-align: center;
-  padding-top: 1rem;
-}
-
-.sales__form {
-  margin-top: 2rem;
-  text-align: left;
-}
-
-/* BOOKING */
-
-.booking {
-  max-width: 680px;
-  margin: 0 auto;
-  padding: var(--space-section) 1.5rem;
-  border-top: 1px solid var(--color-border);
-  text-align: center;
-  scroll-margin-top: var(--banner-height);
-}
-
-.booking h2 {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: clamp(2rem, 4vw, 2.8rem);
   margin-bottom: 1.25rem;
 }
 
-.booking p {
-  color: var(--color-text-mid);
-  margin-bottom: 1.25rem;
-}
-
-.booking .booking__lead {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.25rem;
-  color: var(--color-text);
-}
-
-.booking .booking__details {
-  margin: 2rem 0;
-  color: var(--color-accent);
-  font-size: 0.85rem;
+.poster__cta {
+  font-size: 0.8rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-}
-
-/* TAGLINE */
-
-.tagline {
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 3.5rem 1.5rem;
-  text-align: center;
-}
-
-.tagline p {
-  font-family: var(--font-display);
-  font-weight: 700;
-  letter-spacing: -0.015em;
-  font-size: clamp(1.15rem, 2vw, 1.45rem);
-  color: var(--color-text-mid);
-}
-
-.tagline strong {
-  display: block;
-  margin-top: 0.75rem;
   color: var(--color-accent);
-  font-weight: 800;
 }
 
-.booking .calendly-inline-widget {
-  border: 1px solid var(--color-accent);
-  background: var(--color-bg-alt);
-  box-shadow:
-    0 0 0 1px rgba(201, 162, 75, 0.25),
-    0 0 32px rgba(201, 162, 75, 0.22),
-    0 0 90px rgba(201, 162, 75, 0.12);
+.poster__cta::after {
+  content: ' \2192';
+  transition: margin-left 0.2s;
+}
+
+.poster:hover .poster__cta::after {
+  margin-left: 0.35rem;
 }
 
 /* FOOTER */
@@ -643,7 +462,8 @@ blockquote {
 
 .site-footer__links {
   display: flex;
-  gap: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
 }
 
 .site-footer__links a {
@@ -663,6 +483,18 @@ blockquote {
 
   .hero__ring {
     will-change: auto;
+  }
+
+  .conveyor {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .conveyor__track {
+    animation: none;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
 }
 
@@ -684,10 +516,6 @@ blockquote {
   .hero__rings svg {
     width: min(125vmax, 900px);
     height: min(125vmax, 900px);
-  }
-
-  .sales__method::before {
-    display: none;
   }
 
   .hero__bg {
@@ -714,8 +542,13 @@ blockquote {
     grid-template-columns: 1fr;
   }
 
-  .testimonials__grid {
-    flex-direction: column;
+  .offers {
+    padding-top: 4.5rem;
+  }
+
+  .poster {
+    width: 250px;
+    height: 360px;
   }
 
   .site-footer {
@@ -723,7 +556,7 @@ blockquote {
     text-align: center;
   }
 
-  .sales__fit {
-    grid-template-columns: 1fr;
+  .site-footer__links {
+    justify-content: center;
   }
 }

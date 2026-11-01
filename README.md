@@ -1,6 +1,6 @@
 # jjcarver: jessejamescarver.com
 
-Landing page for "The Influential Introvert" by Jesse James Carver. Static HTML/CSS, no build step, deployed via GitHub Pages from `main` (root).
+Personal landing page for Jesse James Carver: a hero, a short bio, and a conveyor of offers (event, course, wood art, podcast, letters, community, coaching). Static HTML/CSS/JS, no build step, deployed via GitHub Pages from `main` (root).
 
 ## Writing rules for this project (Claude: read before editing any copy)
 
@@ -10,7 +10,14 @@ Landing page for "The Influential Introvert" by Jesse James Carver. Static HTML/
 
 ## Structure
 
-- `index.html`: single page with hero, bio/story, testimonials, coming soon, and footer sections
+- `index.html`: single page with hero, bio, offers conveyor, and footer
 - `assets/css/main.css`: all styling, no CSS framework
-- `assets/images/`: hero-bg.jpg, jesse-bio.jpg, testimonial-1/2/3.jpg
+- `assets/js/conveyor.js`: clones the offer cards to fill the viewport and sets the loop distance and speed
+- `assets/js/hero-rings.js`: scroll parallax for the hero rings
+- `assets/images/`: hero-bg.jpg, jesse-bio.jpg
+- `assets/card-images/`: optional photos for offer cards (see below)
 - `CNAME`: custom domain for GitHub Pages
+
+## Adding or editing an offer
+
+Offers are `<a class="poster">` cards inside `.conveyor__track` in `index.html`. Copy an existing card, change the link and text, and the conveyor picks it up. For a photo card, add `poster--photo` and set `style="--poster-img: url('/assets/card-images/name.jpg');"` (use the leading slash: the URL resolves relative to the stylesheet, not the page. Drop the `<svg class="poster__rings">`).
