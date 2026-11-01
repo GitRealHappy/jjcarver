@@ -358,7 +358,7 @@ a {
   flex: 0 0 auto;
   width: 290px;
   height: 400px;
-  padding: 1.6rem;
+  padding: 1.6rem 1.6rem 1.25rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -456,14 +456,14 @@ a {
   line-height: 1.05;
   letter-spacing: -0.02em;
   color: var(--color-text);
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
 }
 
 .poster__blurb {
   font-size: 0.93rem;
-  line-height: 1.5;
+  line-height: 1.45;
   color: var(--color-text-dim);
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.85rem;
 }
 
 .poster__cta {
