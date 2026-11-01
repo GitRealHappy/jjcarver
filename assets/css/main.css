@@ -277,20 +277,70 @@ a {
   max-width: var(--max-width);
   margin: 0 auto 3rem;
   padding: 0 1.5rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
 }
 
 .offers__head h2 {
   font-size: clamp(2rem, 3.4vw, 3rem);
 }
 
-/* CONVEYOR: assets/js/conveyor.js clones the cards to fill the width and sets
-   --shift and --dur so the loop is seamless at any viewport size. */
+.offers__nav {
+  display: flex;
+  gap: 0.6rem;
+  flex-shrink: 0;
+}
+
+.offers__btn {
+  width: 2.75rem;
+  height: 2.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--color-accent);
+  border-radius: 50%;
+  color: var(--color-accent);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.offers__btn svg {
+  width: 1.15rem;
+  height: 1.15rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.offers__btn:hover,
+.offers__btn:focus-visible {
+  background: var(--color-accent);
+  color: var(--color-bg);
+  outline: none;
+}
+
+/* CONVEYOR: assets/js/conveyor.js clones the cards to fill the width, drifts the
+   track, pauses on hover, and speeds it up on sideways scroll, drag or the
+   nav buttons. */
 
 .conveyor {
   position: relative;
   overflow: hidden;
+  cursor: grab;
+  touch-action: pan-y;
+  overscroll-behavior-x: contain;
   -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
   mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+}
+
+.conveyor.is-dragging {
+  cursor: grabbing;
+  user-select: none;
 }
 
 .conveyor__track {
@@ -298,19 +348,7 @@ a {
   gap: 1.25rem;
   width: max-content;
   padding: 0.75rem 0;
-  animation: conveyor var(--dur, 80s) linear infinite;
   will-change: transform;
-}
-
-.conveyor:hover .conveyor__track,
-.conveyor:focus-within .conveyor__track {
-  animation-play-state: paused;
-}
-
-@keyframes conveyor {
-  to {
-    transform: translateX(calc(var(--shift, 0px) * -1));
-  }
 }
 
 /* POSTER CARDS */
@@ -381,7 +419,7 @@ a {
 
 .poster--photo::after {
   background:
-    linear-gradient(180deg, rgba(13, 12, 10, 0.55) 0%, rgba(13, 12, 10, 0.10) 30%, rgba(13, 12, 10, 0.55) 62%, rgba(13, 12, 10, 0.94) 100%);
+    linear-gradient(180deg, rgba(13, 12, 10, 0.50) 0%, rgba(13, 12, 10, 0.42) 28%, rgba(13, 12, 10, 0.72) 58%, rgba(13, 12, 10, 0.97) 100%);
 }
 
 .poster--photo:hover::before {
@@ -487,12 +525,13 @@ a {
 
   .conveyor {
     overflow-x: auto;
+    cursor: auto;
+    touch-action: auto;
     -webkit-mask-image: none;
     mask-image: none;
   }
 
   .conveyor__track {
-    animation: none;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
@@ -536,6 +575,15 @@ a {
     margin-top: -3rem;
     max-width: 100%;
     padding: 0 1.5rem 2.5rem;
+  }
+
+  .hero__chips li {
+    font-size: 0.64rem;
+    letter-spacing: 0.14em;
+  }
+
+  .hero__chips li + li::before {
+    margin: 0 0.5rem;
   }
 
   .bio {

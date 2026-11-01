@@ -12,7 +12,7 @@ Personal landing page for Jesse James Carver: a hero, a short bio, and a conveyo
 
 - `index.html`: single page with hero, bio, offers conveyor, and footer
 - `assets/css/main.css`: all styling, no CSS framework
-- `assets/js/conveyor.js`: clones the offer cards to fill the viewport and sets the loop distance and speed
+- `assets/js/conveyor.js`: drives the offer conveyor. Clones the cards to fill the viewport, drifts the track, pauses on hover, and speeds up on sideways scroll, drag/swipe or the prev/next buttons (`SPEED` and `BOOST_*` at the top tune it)
 - `assets/js/hero-rings.js`: scroll parallax for the hero rings
 - `assets/images/`: hero-bg.jpg, jesse-bio.jpg
 - `assets/card-images/`: photos for offer cards, JPEG at about 800px tall (see below)
