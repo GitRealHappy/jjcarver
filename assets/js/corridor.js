@@ -171,7 +171,8 @@ function start() {
   if (!N) throw new Error('No cards found for the corridor');
 
   const SPACING = CIRCUMFERENCE / N;                 // metres between cards
-  const P_MIN = -LEAD, P_MAX = N - 1 + LEAD;         // scroll progress, in cards
+  // scroll progress, in cards: one full lap, so the walk ends back at the first card
+  const P_MIN = -LEAD, P_MAX = N + LEAD;
 
   /* Scene */
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
@@ -221,7 +222,7 @@ function start() {
   }
 
   /* Camera */
-  const state = { s: 0, ready: false };
+  const state = { s: 0, ready: false, glide: null };
   const sway = { x: 0, y: 0, tx: 0, ty: 0 };
   const look = new THREE.Vector3();
   function placeCamera() {
@@ -298,25 +299,41 @@ function start() {
 
   // Going to a card scrolls the page to that card's place, so the page,
   // the back button and the scrollbar all stay in step with the corridor.
+  // Stops along the scroll run from 0 to N: stop N is the first card again,
+  // reached after a full lap.
   let lastGo = null;
-  function goTo(i) {
-    i = clamp(i, 0, N - 1);
-    const top = scrollTopFor(i);
-    lastGo = { i, top, time: performance.now() };
+  function goTo(k) {
+    k = clamp(k, 0, N);
+    const top = scrollTopFor(k);
+    lastGo = { k, top, time: performance.now() };
     window.scrollTo({ top, behavior: 'smooth' });
+  }
+  // Wrapping round (next from the last stop, previous from the first) would
+  // mean scrolling the whole section back. Instead the page jumps straight
+  // to the matching stop while the camera glides there the short way round.
+  function wrapTo(k) {
+    const from = state.s;
+    const top = scrollTopFor(k);
+    lastGo = { k, top, time: performance.now() };
+    window.scrollTo({ top, behavior: 'instant' });
+    state.glide = { from, D: ringDelta(from, targetS(k)), t: 0, T: 1.4 };
+  }
+  // a card's nearest stop to where the visitor is now (the first card has two)
+  function goToCard(i) {
+    const p = progress();
+    goTo(i === 0 && Math.abs(N - p) < Math.abs(p) ? N : i);
   }
   function step(dir) {
     let p = progress();
     // pressing again while the page is still gliding counts from where it's heading
-    if (lastGo && performance.now() - lastGo.time < 1500 && Math.abs(window.scrollY - lastGo.top) > 2) p = lastGo.i;
-    if (dir > 0 ? p >= N - 1 - 0.05 : p <= 0.05) return;     // nothing further that way
-    goTo(dir > 0 ? Math.floor(p + 0.1) + 1 : Math.ceil(p - 0.1) - 1);
+    if (lastGo && performance.now() - lastGo.time < 1500 && Math.abs(window.scrollY - lastGo.top) > 2) p = lastGo.k;
+    const k = dir > 0 ? Math.floor(p + 0.1) + 1 : Math.ceil(p - 0.1) - 1;
+    if (k > N) wrapTo(1);              // past the lap's end: on to the second card
+    else if (k < 0) wrapTo(N - 1);     // before the first card: back to the last
+    else goTo(k);
   }
   stepButtons.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      if (btn.getAttribute('aria-disabled') === 'true') return;   // already at the first or last card
-      step(Number(btn.getAttribute('data-conveyor-step')));
-    });
+    btn.addEventListener('click', () => step(Number(btn.getAttribute('data-conveyor-step'))));
   });
 
   cards.forEach((el, i) => {
@@ -329,7 +346,7 @@ function start() {
     const hit = document.createElementNS(SVG, 'circle');
     hit.setAttribute('class', 'corridor-dial__hit');
     hit.setAttribute('cx', hx); hit.setAttribute('cy', hy); hit.setAttribute('r', 12);
-    hit.addEventListener('click', () => goTo(i));
+    hit.addEventListener('click', () => goToCard(i));
     dialTicks.append(tick, hit);
 
     const li = document.createElement('li');
@@ -344,12 +361,12 @@ function start() {
     label.firstChild.textContent = kindOf(el);
     label.lastChild.textContent = titleOf(el);
     btn.append(num, label);
-    btn.addEventListener('click', () => { menu.open = false; goTo(i); });
+    btn.addEventListener('click', () => { menu.open = false; goToCard(i); });
     li.append(btn);
     list.append(li);
 
     // keyboard: tabbing onto a card that isn't in view travels to it
-    el.addEventListener('focusin', () => { if (!el.classList.contains('is-near')) goTo(i); });
+    el.addEventListener('focusin', () => { if (!el.classList.contains('is-near')) goToCard(i); });
   });
   const skipItem = document.createElement('li');
   skipItem.innerHTML = '<a class="corridor-menu__skip" href="#site-footer">Skip past the invitations</a>';
@@ -373,10 +390,6 @@ function start() {
       where.firstChild.textContent = `${pad(best + 1)} / ${pad(N)}`;
       where.lastChild.textContent = kindOf(cards[best]);
     }
-    stepButtons.forEach((btn) => {
-      const dir = Number(btn.getAttribute('data-conveyor-step'));
-      btn.setAttribute('aria-disabled', String(dir < 0 ? p <= 0.05 : p >= N - 1 - 0.05));
-    });
     if (startP === null) startP = p;
     else if (Math.abs(p - startP) > 0.2) hint.classList.add('is-gone');
   }
@@ -395,7 +408,7 @@ function start() {
     camera.updateProjectionMatrix();
     for (const m of lineMaterials) m.resolution.set(w, h);
 
-    // the section is as tall as the scrolling it takes to walk past every card
+    // the section is as tall as the scrolling it takes to walk one lap
     section.style.height = `${Math.round(h * (1 + (P_MAX - P_MIN) * SCROLL_PER_CARD))}px`;
 
     box.w = w; box.h = h;
@@ -424,9 +437,20 @@ function start() {
     const p = progress();                            // read layout before writing styles
     const target = targetS(p);
     if (!state.ready) { state.s = target; state.ready = true; dirty = true; }
-    const d = ringDelta(state.s, target);
-    if (Math.abs(d) > 1e-3) { state.s = wrapS(state.s + d * (1 - Math.exp(-dt / FOLLOW))); dirty = true; }
-    else if (d !== 0) { state.s = target; dirty = true; }
+    if (state.glide && Math.abs(window.scrollY - lastGo.top) > 2) state.glide = null;   // visitor scrolled: follow them
+    if (state.glide) {
+      // eased glide for a wrap-round jump: starts and ends gently
+      const g = state.glide;
+      g.t += dt;
+      const u = Math.min(g.t / g.T, 1);
+      state.s = wrapS(g.from + g.D * u * u * u * (10 - 15 * u + 6 * u * u));
+      if (u >= 1) state.glide = null;
+      dirty = true;
+    } else {
+      const d = ringDelta(state.s, target);
+      if (Math.abs(d) > 1e-3) { state.s = wrapS(state.s + d * (1 - Math.exp(-dt / FOLLOW))); dirty = true; }
+      else if (d !== 0) { state.s = target; dirty = true; }
+    }
 
     const k = 1 - Math.exp(-dt / 0.5);
     if (Math.abs(sway.tx - sway.x) + Math.abs(sway.ty - sway.y) > 1e-4) {
@@ -447,7 +471,7 @@ function start() {
   requestAnimationFrame(frame);
 
   // handle for testing in the browser console
-  window.__corridor = { state, progress, scrollTopFor, targetS, goTo, N, CIRCUMFERENCE, SPACING };
+  window.__corridor = { state, progress, scrollTopFor, targetS, goTo, goToCard, step, N, CIRCUMFERENCE, SPACING };
 }
 
 // index.html adds .corridor to <html> when it's worth trying; if the
