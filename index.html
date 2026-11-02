@@ -11,6 +11,36 @@
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="assets/css/main.css">
+
+  <script>
+    // The Invitations section becomes a 3D ring corridor (assets/js/corridor.js) when the
+    // browser can draw it and the visitor hasn't asked for reduced motion. Otherwise, or if
+    // it doesn't load, the cards stay on the conveyor (assets/js/conveyor.js).
+    // Add ?conveyor to the address to see the conveyor version.
+    (function () {
+      var root = document.documentElement;
+      if (/[?&]conveyor\b/.test(location.search)) return;
+      if (!window.WebGLRenderingContext || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      root.classList.add('corridor');
+      window.corridorFallback = function () {
+        root.classList.remove('corridor', 'corridor-ready');
+        var section = document.querySelector('.offers');
+        if (section) section.style.height = '';
+        if (window.startConveyor) window.startConveyor();
+      };
+      setTimeout(function () {
+        if (!root.classList.contains('corridor-ready')) window.corridorFallback();
+      }, 10000);
+    })();
+  </script>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
 </head>
 <body>
 
@@ -73,95 +103,117 @@
     </section>
 
     <!-- OFFERS -->
-    <section class="offers" id="offers">
-      <div class="offers__head">
-        <div>
-          <p class="eyebrow">Where to find me</p>
-          <h2>Invitations</h2>
+    <section class="offers" id="offers" aria-labelledby="offers-title">
+      <div class="offers__stage">
+        <canvas class="corridor-canvas" aria-hidden="true"></canvas>
+        <a class="corridor-skip" href="#site-footer">Skip past the invitations</a>
+
+        <div class="offers__head">
+          <div>
+            <p class="eyebrow">Where to find me</p>
+            <h2 id="offers-title">Invitations</h2>
+          </div>
+          <div class="offers__nav">
+            <button type="button" class="offers__btn" data-conveyor-step="-1" aria-label="Previous offer">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>
+            </button>
+            <button type="button" class="offers__btn" data-conveyor-step="1" aria-label="Next offer">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg>
+            </button>
+          </div>
         </div>
-        <div class="offers__nav">
-          <button type="button" class="offers__btn" data-conveyor-step="-1" aria-label="Previous offer">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>
-          </button>
-          <button type="button" class="offers__btn" data-conveyor-step="1" aria-label="Next offer">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg>
-          </button>
+
+        <div class="conveyor">
+          <div class="conveyor__track">
+
+            <a class="poster poster--photo" href="https://www.thelivinginternet.com/" target="_blank" rel="noopener" style="--poster-img: url('/assets/card-images/summit.jpg'); --poster-pos: 60% 50%;">
+              <span class="poster__kind">Event</span>
+              <span class="poster__body">
+                <span class="poster__title">Future-Proof Creator Summit</span>
+                <span class="poster__blurb">Super-early-bird tickets for the next in-person gathering.</span>
+                <span class="poster__cta">Get a ticket</span>
+              </span>
+            </a>
+
+            <a class="poster poster--photo" href="https://www.webrebellion.com/" target="_blank" rel="noopener" style="--poster-img: url('/assets/card-images/web-designer.jpg'); --poster-pos: 4% 50%;">
+              <span class="poster__kind">Course</span>
+              <span class="poster__body">
+                <span class="poster__title">The One Hour Web Designer</span>
+                <span class="poster__blurb">Build a one-person agency and casually replace your job in your spare time.</span>
+                <span class="poster__cta">See the course</span>
+              </span>
+            </a>
+
+            <a class="poster poster--photo" href="https://www.oakmoss.ca/" target="_blank" rel="noopener" style="--poster-img: url('/assets/card-images/oakmoss.jpg');">
+              <span class="poster__kind">Wood Art</span>
+              <span class="poster__body">
+                <span class="poster__title">Oakmoss</span>
+                <span class="poster__blurb">Handcrafted tables, boards, boxes and wallets, made to order.</span>
+                <span class="poster__cta">Browse the shop</span>
+              </span>
+            </a>
+
+            <a class="poster poster--photo" href="https://www.youtube.com/@jessejamescarver" target="_blank" rel="noopener" style="--poster-img: url('/assets/card-images/unblocked.jpg'); --poster-pos: 38% 50%;">
+              <span class="poster__kind">Podcast</span>
+              <span class="poster__body">
+                <span class="poster__title">On YouTube</span>
+                <span class="poster__blurb">Long conversations on creating, connecting and building a life you like.</span>
+                <span class="poster__cta">Watch</span>
+              </span>
+            </a>
+
+            <a class="poster poster--photo" href="https://jessejamescarver.substack.com/" target="_blank" rel="noopener" style="--poster-img: url('/assets/card-images/social-abundance.jpg'); --poster-pos: 42% 50%;">
+              <span class="poster__kind">Letters</span>
+              <span class="poster__body">
+                <span class="poster__title">Social Abundance</span>
+                <span class="poster__blurb">Essays on building social abundance, offline and online.</span>
+                <span class="poster__cta">Read the letters</span>
+              </span>
+            </a>
+
+            <a class="poster poster--photo" href="https://jesse.eden.so/the-living-internet-alliance" target="_blank" rel="noopener" style="--poster-img: url('/assets/card-images/living-internet.jpg'); --poster-pos: 55% 50%;">
+              <span class="poster__kind">Community</span>
+              <span class="poster__body">
+                <span class="poster__title">The Living Internet Alliance</span>
+                <span class="poster__blurb">Creator-entrepreneurs and writers forging their way together.</span>
+                <span class="poster__cta">Join for $1</span>
+              </span>
+            </a>
+
+            <a class="poster poster--photo" href="https://jesse.eden.so/introvert-to-influence" target="_blank" rel="noopener" style="--poster-img: url('/assets/card-images/introvert.jpg'); --poster-pos: 48% 50%;">
+              <span class="poster__kind">Coaching</span>
+              <span class="poster__body">
+                <span class="poster__title">Introvert to Influence</span>
+                <span class="poster__blurb">A 6-week 1:1 program. Six calls plus daily WhatsApp support.</span>
+                <span class="poster__cta">Learn more</span>
+              </span>
+            </a>
+
+          </div>
         </div>
-      </div>
 
-      <div class="conveyor">
-        <div class="conveyor__track">
-
-          <a class="poster poster--photo" href="https://www.thelivinginternet.com/" target="_blank" rel="noopener" style="--poster-img: url('/assets/card-images/summit.jpg'); --poster-pos: 60% 50%;">
-            <span class="poster__kind">Event</span>
-            <span class="poster__body">
-              <span class="poster__title">Future-Proof Creator Summit</span>
-              <span class="poster__blurb">Super-early-bird tickets for the next in-person gathering.</span>
-              <span class="poster__cta">Get a ticket</span>
-            </span>
-          </a>
-
-          <a class="poster poster--photo" href="https://www.webrebellion.com/" target="_blank" rel="noopener" style="--poster-img: url('/assets/card-images/web-designer.jpg'); --poster-pos: 4% 50%;">
-            <span class="poster__kind">Course</span>
-            <span class="poster__body">
-              <span class="poster__title">The One Hour Web Designer</span>
-              <span class="poster__blurb">Build a one-person agency and casually replace your job in your spare time.</span>
-              <span class="poster__cta">See the course</span>
-            </span>
-          </a>
-
-          <a class="poster poster--photo" href="https://www.oakmoss.ca/" target="_blank" rel="noopener" style="--poster-img: url('/assets/card-images/oakmoss.jpg');">
-            <span class="poster__kind">Wood Art</span>
-            <span class="poster__body">
-              <span class="poster__title">Oakmoss</span>
-              <span class="poster__blurb">Handcrafted tables, boards, boxes and wallets, made to order.</span>
-              <span class="poster__cta">Browse the shop</span>
-            </span>
-          </a>
-
-          <a class="poster poster--photo" href="https://www.youtube.com/@jessejamescarver" target="_blank" rel="noopener" style="--poster-img: url('/assets/card-images/unblocked.jpg'); --poster-pos: 38% 50%;">
-            <span class="poster__kind">Podcast</span>
-            <span class="poster__body">
-              <span class="poster__title">On YouTube</span>
-              <span class="poster__blurb">Long conversations on creating, connecting and building a life you like.</span>
-              <span class="poster__cta">Watch</span>
-            </span>
-          </a>
-
-          <a class="poster poster--photo" href="https://jessejamescarver.substack.com/" target="_blank" rel="noopener" style="--poster-img: url('/assets/card-images/social-abundance.jpg'); --poster-pos: 42% 50%;">
-            <span class="poster__kind">Letters</span>
-            <span class="poster__body">
-              <span class="poster__title">Social Abundance</span>
-              <span class="poster__blurb">Essays on building social abundance, offline and online.</span>
-              <span class="poster__cta">Read the letters</span>
-            </span>
-          </a>
-
-          <a class="poster poster--photo" href="https://jesse.eden.so/the-living-internet-alliance" target="_blank" rel="noopener" style="--poster-img: url('/assets/card-images/living-internet.jpg'); --poster-pos: 55% 50%;">
-            <span class="poster__kind">Community</span>
-            <span class="poster__body">
-              <span class="poster__title">The Living Internet Alliance</span>
-              <span class="poster__blurb">Creator-entrepreneurs and writers forging their way together.</span>
-              <span class="poster__cta">Join for $1</span>
-            </span>
-          </a>
-
-          <a class="poster poster--photo" href="https://jesse.eden.so/introvert-to-influence" target="_blank" rel="noopener" style="--poster-img: url('/assets/card-images/introvert.jpg'); --poster-pos: 48% 50%;">
-            <span class="poster__kind">Coaching</span>
-            <span class="poster__body">
-              <span class="poster__title">Introvert to Influence</span>
-              <span class="poster__blurb">A 6-week 1:1 program. Six calls plus daily WhatsApp support.</span>
-              <span class="poster__cta">Learn more</span>
-            </span>
-          </a>
-
+        <!-- Ring corridor controls (assets/js/corridor.js fills these in) -->
+        <div class="corridor-hud">
+          <svg class="corridor-dial" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+            <circle class="corridor-dial__track" cx="50" cy="50" r="40"></circle>
+            <g class="corridor-dial__ticks"></g>
+            <circle class="corridor-dial__pos" cx="50" cy="10" r="5"></circle>
+          </svg>
+          <div class="corridor-hud__text">
+            <p class="corridor-where"></p>
+            <details class="corridor-menu">
+              <summary>All invitations</summary>
+              <ol class="corridor-menu__list"></ol>
+            </details>
+          </div>
         </div>
+        <p class="corridor-hint" aria-hidden="true">Scroll to walk the corridor</p>
       </div>
     </section>
 
   </main>
 
-  <footer class="site-footer">
+  <footer class="site-footer" id="site-footer">
     <p>&copy; 2026 Jesse James Carver. All rights reserved.</p>
     <div class="site-footer__links">
       <a href="https://jessejamescarver.substack.com/" target="_blank" rel="noopener">Substack</a>
@@ -173,6 +225,7 @@
 
   <script src="assets/js/conveyor.js"></script>
   <script src="assets/js/hero-rings.js"></script>
+  <script type="module" src="assets/js/corridor.js" onerror="window.corridorFallback && window.corridorFallback()"></script>
 
 </body>
 </html>

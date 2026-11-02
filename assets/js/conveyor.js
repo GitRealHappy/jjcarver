@@ -168,5 +168,13 @@
     window.requestAnimationFrame(frame);
   }
 
-  document.querySelectorAll('.conveyor').forEach(init);
+  // The ring corridor (corridor.js) takes over this section when it can. If it
+  // can't, index.html calls window.startConveyor() to bring the conveyor back.
+  var started = false;
+  window.startConveyor = function () {
+    if (started) return;
+    started = true;
+    document.querySelectorAll('.conveyor').forEach(init);
+  };
+  if (!document.documentElement.classList.contains('corridor')) window.startConveyor();
 })();
